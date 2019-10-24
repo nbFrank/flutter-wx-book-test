@@ -8,6 +8,17 @@ class TabNavigator extends StatefulWidget {
 class _TabNavigatorState extends State<TabNavigator> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+        body: Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+        colors: [
+          Color(0xffedeef0),
+          Color(0xffe6e7e9),
+        ],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      )),
+    ));
   }
 }
