@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'content_pager.dart';
 
 class TabNavigator extends StatefulWidget {
