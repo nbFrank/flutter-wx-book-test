@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:wx_book_test_app/card_recommend.dart';
+
+import 'custom_appbar.dart';
 
 class ContentPager extends StatefulWidget {
   // 回调方法属性 ValueChanged
@@ -27,10 +31,11 @@ class _ContentPagerState extends State<ContentPager> {
 
   @override
   void initState() {
-    //生命周期
+    //第一个生命周期
     if (widget.contentPageController != null) {
       widget.contentPageController._pageController = _pageController;
     }
+    _statusBar();
     super.initState();
   }
 
@@ -39,17 +44,21 @@ class _ContentPagerState extends State<ContentPager> {
     return Column(
       children: <Widget>[
         //appBar
+        CustomAppBar(),
         Expanded(
           //高度撑开，否则在Column中没有高度会报错
           child: PageView(
             controller: _pageController,
-            // 当两个类进行关联的时候，可以通过 widget. 来调用被关联的类的属性方法
+            // 当两个类进行关联的时候，可以通过 widget. 来调用被关联的类的属性方法, widget 指向 State<>里面的类
             onPageChanged: widget.onPageChanged,
             children: <Widget>[
-              _wrapItem(0),
-              _wrapItem(1),
-              _wrapItem(2),
-              _wrapItem(3),
+              _wrapItem(CardRecommend()),
+              _wrapItem(CardRecommend()),
+              _wrapItem(CardRecommend()),
+              _wrapItem(CardRecommend())
+//              _wrapItem(1),
+//              _wrapItem(2),
+//              _wrapItem(3),
             ],
           ),
         )
@@ -57,13 +66,26 @@ class _ContentPagerState extends State<ContentPager> {
     );
   }
 
-  Widget _wrapItem(int index) {
+  Widget _wrapItem(Widget widget) {
     return Padding(
       padding: EdgeInsets.all(10),
-      child: Container(
-        decoration: BoxDecoration(color: _colors[index]),
-      ),
+      child: widget,
     );
+  }
+
+//  状态栏样式-沉浸式状态栏
+  _statusBar() {
+    //黑色沉浸式状态栏，基于SystemUiOverlayStyle.dark修改了statusBarColor
+    SystemUiOverlayStyle uiOverlayStyle = SystemUiOverlayStyle(
+      systemNavigationBarColor: Color(0xFF333333),
+      systemNavigationBarDividerColor: null,
+      statusBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+    );
+
+    SystemChrome.setSystemUIOverlayStyle(uiOverlayStyle);
   }
 }
 
